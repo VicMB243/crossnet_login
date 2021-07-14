@@ -76,21 +76,6 @@ public class ProfileActivity extends AppCompatActivity  {
             handleSignInResult(acct);
 
 
-//
-//        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleSignInClient.asGoogleApiClient());
-//
-//
-//        if(opr.isDone()){
-//            GoogleSignInResult result=opr.get();
-//            handleSignInResult(result);
-//        }else{
-//            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-//                @Override
-//                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-//                    handleSignInResult(googleSignInResult);
-//                }
-//            });
-//        }
     }
     private void handleSignInResult(GoogleSignInAccount account){
         if(account != null){
@@ -102,10 +87,35 @@ public class ProfileActivity extends AppCompatActivity  {
             }catch (NullPointerException e){
                 Toast.makeText(getApplicationContext(),"image not found",Toast.LENGTH_LONG).show();
             }
+            
+            
+            
+            //send user ID token to backend for verification
+            //replace yourbackend.example.com/tokensignin with the right path to backend services
+            
+//             String idToken = account.getIdToken();
+//             HttpClient httpClient = new DefaultHttpClient();
+//             HttpPost httpPost = new HttpPost("https://yourbackend.example.com/tokensignin");
 
-        }else{
-            gotoMainActivity();
-        }
+//             try {
+//               List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+//               nameValuePairs.add(new BasicNameValuePair("idToken", idToken));
+//               httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+//               HttpResponse response = httpClient.execute(httpPost);
+//               int statusCode = response.getStatusLine().getStatusCode();
+//               final String responseBody = EntityUtils.toString(response.getEntity());
+              
+                
+//             } catch (ClientProtocolException e) {
+              
+//             } catch (IOException e) {
+              
+//             }
+
+//         }else{
+//             gotoMainActivity();
+//         }
     }
     private void gotoMainActivity(){
         Intent intent=new Intent(this,MainActivity.class);
