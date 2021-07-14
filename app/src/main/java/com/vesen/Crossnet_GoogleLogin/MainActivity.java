@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     TextView textView;
+    private ProgressBar loadingPB;
     private static final int RC_SIGN_IN = 1;
 
     @Override
@@ -40,11 +42,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
         signInButton = (SignInButton)findViewById(R.id.sign_in_button);
+        loadingPB = findViewById(R.id.idLoadingPB);
 
 
 
         GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+
                 .build();
 
 
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI.
+
             updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -96,11 +100,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
     private void gotoLandingPage(){
+        loadingPB.setVisibility(View.GONE);
         Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
         startActivity(intent);
     }
 
     private void signIn() {
+
+        loadingPB.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
